@@ -95,13 +95,18 @@ const StudentDashboard = () => {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           {/* Welcome Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Welcome back, {userData?.name}! 👋
-            </h1>
-            <p className="mt-2 text-gray-600">
-              Track your achievements and build your digital portfolio
-            </p>
+          <div className="mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Welcome back, {userData?.name}! 👋
+              </h1>
+              <p className="mt-2 text-gray-600">
+                Track your achievements and build your digital portfolio
+              </p>
+            </div>
+            <div className="ml-4">
+              {/* Dark mode toggle moved to Navbar */}
+            </div>
           </div>
 
           {/* Stats Cards */}
@@ -151,7 +156,7 @@ const StudentDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <Link
               to="/activities/add"
-              className="card hover:shadow-md transition-shadow cursor-pointer group"
+              className="card hover:shadow-md transition-shadow cursor-pointer group btn-ensure-contrast"
             >
               <div className="flex items-center">
                 <div className="p-3 bg-primary-100 rounded-lg group-hover:bg-primary-200 transition-colors">
@@ -186,7 +191,7 @@ const StudentDashboard = () => {
               <h2 className="text-xl font-semibold text-gray-900">Recent Activities</h2>
               <Link 
                 to="/activities/add" 
-                className="btn-primary text-sm"
+                className="btn-primary text-sm btn-ensure-contrast"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Activity

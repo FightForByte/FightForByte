@@ -12,7 +12,7 @@ import {
   ExternalLink,
   Mail,
   Phone,
-  MapPin
+  
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { getUserActivities } from '../../firebase/firestore';

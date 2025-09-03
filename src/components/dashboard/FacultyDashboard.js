@@ -68,13 +68,18 @@ const FacultyDashboard = () => {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           {/* Welcome Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Faculty Dashboard 📋
-            </h1>
-            <p className="mt-2 text-gray-600">
-              Review and approve student activities • {userData?.department} Department
-            </p>
+          <div className="mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Faculty Dashboard 📋
+              </h1>
+              <p className="mt-2 text-gray-600">
+                Review and approve student activities • {userData?.department} Department
+              </p>
+            </div>
+            <div className="ml-4">
+              {/* Dark mode toggle moved to Navbar */}
+            </div>
           </div>
 
           {/* Stats Cards */}
@@ -166,7 +171,7 @@ const FacultyDashboard = () => {
               </h2>
               <Link 
                 to="/approvals" 
-                className="btn-primary text-sm"
+                className="btn-primary text-sm btn-ensure-contrast"
               >
                 <CheckSquare className="h-4 w-4 mr-2" />
                 Review All

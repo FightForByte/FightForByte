@@ -12,6 +12,28 @@ body {
   background-color: #f9fafb;
 }
 
+:root {
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #7c3aed; /* stronger purple for hero/buttons */
+}
+
+.dark {
+  --bg: #06080b; /* page background */
+  --card: #0b1220; /* card background */
+  --text: #e6eef8; /* main text */
+  --muted: #9aa7b7; /* muted text */
+  --primary: #60a5fa; /* primary accent */
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -19,7 +41,7 @@ code {
 
 /* Custom Component Classes */
 .btn-primary {
-  background-color: #2563eb;
+  background-color: var(--primary);
   color: white;
   font-weight: 500;
   padding: 0.5rem 1rem;
@@ -30,7 +52,7 @@ code {
 }
 
 .btn-primary:hover {
-  background-color: #1d4ed8;
+  filter: brightness(0.95);
 }
 
 .btn-primary:disabled {
@@ -39,8 +61,8 @@ code {
 }
 
 .btn-secondary {
-  background-color: #e5e7eb;
-  color: #111827;
+  background-color: var(--card);
+  color: var(--text);
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -54,25 +76,48 @@ code {
 }
 
 .card {
-  background-color: white;
+  background-color: var(--card);
   border-radius: 0.75rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid #e5e7eb;
-  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.12);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 1.75rem;
+}
+
+/* Auth page background and card tweaks */
+.auth-bg {
+  background: linear-gradient(135deg, rgba(238,242,255,0.7) 0%, rgba(253,242,248,0.7) 100%);
+}
+
+/* Dark-mode full-page background for auth area */
+.dark .auth-bg {
+  background: linear-gradient(135deg, rgba(11,17,36,0.85) 0%, rgba(6,8,11,0.95) 100%) !important;
+}
+
+.auth-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2.5rem;
 }
 
 .input-field {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.9rem 0.5rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
   outline: none;
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
 .input-field:focus {
   border-color: transparent;
-  box-shadow: 0 0 0 2px #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+
+/* make focus visible for keyboard users */
+:focus-visible {
+  outline: 3px solid rgba(59,130,246,0.15);
+  outline-offset: 2px;
 }
 
 .badge-success {
@@ -127,6 +172,11 @@ code {
   animation: fadeIn 0.5s ease-in-out;
 }
 
+/* small entrance for cards */
+.animate-card-in {
+  animation: slideUp 0.35s cubic-bezier(.2,.9,.3,1);
+}
+
 .animate-slide-up {
   animation: slideUp 0.3s ease-out;
 }
@@ -149,4 +199,131 @@ code {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Scoped adjustments for auth inputs and icons */
+.auth-card .input-wrapper {
+  padding: 1rem 1rem;
+  gap: 1rem;
+}
+.auth-card .input-wrapper svg,
+.auth-card .input-wrapper .lucide-icon {
+  height: 1.4rem;
+  width: 1.4rem;
+  color: var(--muted);
+}
+.auth-card h2 {
+  font-size: 2.25rem;
+}
+.auth-card p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+.auth-card .card {
+  padding: 2rem;
+}
+
+.auth-card .btn-primary,
+.auth-card button[type="submit"] {
+  padding: 0.9rem 1rem;
+  font-size: 1.05rem;
+  border-radius: 0.75rem;
+}
+
+/* Dark-mode overrides scoped to auth pages */
+.dark .auth-card,
+.dark .auth-card .card,
+.dark .auth-card .card * {
+  color: var(--text) !important;
+}
+
+.dark .auth-card .input-wrapper {
+  background-color: rgba(255,255,255,0.03) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+.dark .auth-card .input-field {
+  color: var(--text) !important;
+  background: transparent !important;
+}
+
+.dark .auth-card .input-field::placeholder {
+  color: rgba(230,238,248,0.5) !important;
+}
+
+.dark .auth-card label,
+.dark .auth-card p,
+.dark .auth-card h2 {
+  color: var(--text) !important;
+}
+
+/* override demo card light-blue background when dark mode is active */
+.dark .auth-card .card.bg-blue-50 {
+  background-color: rgba(99,102,241,0.06) !important;
+  border-color: rgba(99,102,241,0.12) !important;
+  color: var(--text) !important;
+}
+
+/* Global dark-mode overrides for the whole app */
+.dark body, .dark .min-h-screen {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+.dark nav, .dark .navbar {
+  /* Softer, less-contrasting nav background in dark mode to improve legibility */
+  background-color: rgba(15, 23, 42, 0.9) !important; /* roughly gray-900 with slight translucency */
+  border-color: rgba(255,255,255,0.04) !important;
+  color: var(--text) !important;
+}
+
+.dark .card {
+  background-color: var(--card) !important;
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,0.04) !important;
+}
+
+.dark a, .dark .text-primary-600, .dark .text-primary-700 {
+  color: var(--primary) !important;
+}
+
+.dark .text-gray-900 { color: var(--text) !important; }
+.dark .text-gray-600 { color: var(--muted) !important; }
+.dark .text-gray-500 { color: var(--muted) !important; }
+
+.dark .bg-gray-50 { background-color: transparent !important; }
+.dark .bg-blue-50 { background-color: rgba(99,102,241,0.04) !important; }
+
+/* Buttons */
+.dark .btn-primary { background-color: var(--primary) !important; color: #ffffff !important; }
+.btn-primary:focus { outline: 3px solid rgba(124,58,237,0.18); outline-offset: 2px; }
+.dark .btn-secondary { background-color: var(--card) !important; color: #ffffff !important; }
+
+/* Section title helper to ensure headings stay visible in light mode and follow theme in dark mode */
+.section-title { color: #0f172a; }
+.dark .section-title { color: var(--text) !important; }
+
+/* Ensure all headings are visible in light mode; follow theme in dark mode */
+h1,h2,h3,h4,h5,h6 { color: #0f172a; }
+.dark h1,h2,h3,h4,h5,h6 { color: var(--text) !important; }
+
+/* In dark mode, ensure any element using a background utility keeps light-colored text for legibility */
+.dark a[class*="bg-"], .dark button[class*="bg-"], .dark .btn-primary, .dark .btn-secondary, .dark .home-btn {
+  color: #ffffff !important;
+}
+
+/* Helper class to ensure contrast on buttons with light backgrounds in dark mode */
+.btn-ensure-contrast {
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.dark .btn-ensure-contrast {
+  background-color: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  color: #ffffff !important;
+}
+
+/* Ensure SVG icons inside these buttons remain visible in dark mode */
+.dark button[class*="bg-"] svg, .dark .btn-primary svg, .dark .home-btn svg, .dark .btn-ensure-contrast svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }

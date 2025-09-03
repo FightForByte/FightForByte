@@ -11,14 +11,13 @@ import {
   FileText,
   Download
 } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { /* useAuth */ } from '../../contexts/AuthContext';
 import { getPendingActivities } from '../../firebase/firestore';
 import Navbar from '../common/Navbar';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const AdminDashboard = () => {
-  const { userData } = useAuth();
-  const [pendingActivities, setPendingActivities] = useState([]);
+  // userData not required in this view; omit to avoid unused variable
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalStudents: 1250,
@@ -33,7 +32,6 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       const result = await getPendingActivities();
       if (result.success) {
-        setPendingActivities(result.activities);
         setStats(prev => ({
           ...prev,
           pendingApprovals: result.activities.length
@@ -65,13 +63,18 @@ const AdminDashboard = () => {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           {/* Welcome Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Admin Dashboard 📊
-            </h1>
-            <p className="mt-2 text-gray-600">
-              Institution-wide analytics and management overview
-            </p>
+          <div className="mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Admin Dashboard 📊
+              </h1>
+              <p className="mt-2 text-gray-600">
+                Institution-wide analytics and management overview
+              </p>
+            </div>
+            <div className="ml-4">
+              {/* Dark mode toggle moved to Navbar */}
+            </div>
           </div>
 
           {/* Overview Stats */}
@@ -129,7 +132,7 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Link
               to="/approvals"
-              className="card hover:shadow-md transition-shadow cursor-pointer group"
+              className="card hover:shadow-md transition-shadow cursor-pointer group btn-ensure-contrast"
             >
               <div className="flex items-center">
                 <div className="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors">
@@ -148,7 +151,7 @@ const AdminDashboard = () => {
             </Link>
 
             <button 
-              className="card hover:shadow-md transition-shadow cursor-pointer group text-left"
+              className="card hover:shadow-md transition-shadow cursor-pointer group text-left btn-ensure-contrast"
               onClick={() => alert('NAAC Report generation feature coming soon!')}
             >
               <div className="flex items-center">
@@ -163,7 +166,7 @@ const AdminDashboard = () => {
             </button>
 
             <button 
-              className="card hover:shadow-md transition-shadow cursor-pointer group text-left"
+              className="card hover:shadow-md transition-shadow cursor-pointer group text-left btn-ensure-contrast"
               onClick={() => alert('Advanced analytics feature coming soon!')}
             >
               <div className="flex items-center">

@@ -2,37 +2,72 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { User, Lock, Mail, LogIn } from 'lucide-react';
+import DarkModeToggle from '../common/DarkModeToggle';
+import FormInput from '../common/FormInput';
+import ForgotPasswordModal from '../common/ForgotPasswordModal';
 import { loginUser } from '../../firebase/auth';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const Login = () => {
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [errors, setErrors] = useState({});
+  const [passwordStrength, setPasswordStrength] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  
+
+  // Simple email and password validation
+  const validate = (field, value) => {
+    let error = '';
+    if (field === 'email') {
+      if (!value) error = 'Email is required';
+      else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) error = 'Invalid email address';
+    }
+    if (field === 'password') {
+      if (!value) error = 'Password is required';
+      else if (value.length < 6) error = 'Password must be at least 6 characters';
+    }
+    return error;
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: validate(name, value) }));
+    if (name === 'password') setPasswordStrength(getPasswordStrength(value));
+  };
+
+  function getPasswordStrength(pw) {
+    if (!pw) return '';
+    if (pw.length < 6) return 'Weak';
+    if (/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/.test(pw)) return 'Strong';
+    if (/^(?=.*[A-Z])(?=.*[0-9]).{6,}$/.test(pw)) return 'Medium';
+    return 'Weak';
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate all fields before submit
+    const newErrors = {
+      email: validate('email', formData.email),
+      password: validate('password', formData.password),
+    };
+    setErrors(newErrors);
+    if (Object.values(newErrors).some(Boolean)) return;
     setLoading(true);
-
     const result = await loginUser(formData.email, formData.password);
-    
     if (result.success) {
       toast.success('Welcome back! 🎉');
       navigate('/dashboard');
     } else {
       toast.error(result.error);
     }
-    
     setLoading(false);
   };
 
@@ -41,10 +76,13 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 auth-bg">
+      <div className="auth-card w-full space-y-8">
         {/* Header */}
-        <div className="text-center">
+        <div className="text-center relative">
+          <div className="absolute top-0 right-0">
+            <DarkModeToggle className="-mt-2 -mr-2" />
+          </div>
           <div className="mx-auto h-16 w-16 bg-primary-600 rounded-full flex items-center justify-center mb-4">
             <User className="h-8 w-8 text-white" />
           </div>
@@ -63,52 +101,65 @@ const Login = () => {
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="input-field pl-10"
-                  placeholder="Enter your email"
-                />
-              </div>
+              <FormInput
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+                icon={<Mail aria-hidden="true" className="h-6 w-6 text-gray-400 flex-shrink-0" />}
+                error={errors.email}
+                autoComplete="email"
+                ariaLabel="Email address"
+              />
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="input-field pl-10"
-                  placeholder="Enter your password"
-                />
-              </div>
+              <FormInput
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+                icon={<Lock aria-hidden="true" className="h-6 w-6 text-gray-400 flex-shrink-0" />}
+                error={errors.password}
+                autoComplete="current-password"
+                ariaLabel="Password"
+                showPasswordToggle
+              />
+              {/* keep passwordStrength referenced for accessibility and to avoid lint warnings; visible only to screen readers */}
+              <span className="sr-only">Password strength: {passwordStrength || 'not set'}</span>
             </div>
 
             <button
               type="submit"
-              className="w-full btn-primary flex items-center justify-center"
+              className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg shadow transition focus:outline-none focus:ring-2 focus:ring-primary-300 disabled:opacity-60 disabled:cursor-not-allowed"
               disabled={loading}
+              aria-label="Sign in"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
               ) : (
-                <LogIn className="h-4 w-4 mr-2" />
+                <LogIn className="h-5 w-5 mr-1" />
               )}
               Sign In
             </button>
+            <div className="text-right mt-2">
+              <button
+                type="button"
+                className="text-primary-600 hover:underline text-sm font-medium focus:outline-none"
+                onClick={() => setShowForgot(true)}
+              >
+                Forgot Password?
+              </button>
+            </div>
           </form>
 
           <div className="mt-6 text-center">
@@ -142,6 +193,10 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+  <ForgotPasswordModal open={showForgot} onClose={() => setShowForgot(false)} />
+    
+    
     </div>
   );
 };

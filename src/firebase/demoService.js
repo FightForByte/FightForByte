@@ -106,7 +106,6 @@ const DEMO_ACTIVITIES = [
 ];
 
 let currentUser = null;
-let currentUserData = null;
 let authStateCallbacks = [];
 
 export const demoAuth = {
@@ -157,8 +156,6 @@ export const demoLogin = async (email, password) => {
     displayName: demoUser.displayName
   };
   
-  currentUserData = demoUser.userData;
-  
   console.log('Setting current user:', currentUser);
   console.log('Triggering auth state change immediately');
   
@@ -199,8 +196,6 @@ export const demoRegister = async (email, password, userData) => {
     displayName: newUser.displayName
   };
   
-  currentUserData = newUser.userData;
-  
   // Trigger auth state change
   triggerAuthStateChange();
   
@@ -209,7 +204,6 @@ export const demoRegister = async (email, password, userData) => {
 
 export const demoLogout = async () => {
   currentUser = null;
-  currentUserData = null;
   
   // Trigger auth state change
   triggerAuthStateChange();

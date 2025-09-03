@@ -8,10 +8,10 @@ import {
   CheckSquare, 
   BarChart3, 
   LogOut, 
-  User,
   Bell
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import DarkModeToggle from './DarkModeToggle';
 import { logoutUser } from '../../firebase/auth';
 
 const Navbar = () => {
@@ -70,12 +70,14 @@ const Navbar = () => {
           {/* Logo and Navigation */}
           <div className="flex items-center">
             <Link to="/dashboard" className="flex-shrink-0 flex items-center">
-              <div className="h-10 w-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                <User className="h-6 w-6 text-white" />
-              </div>
-              <span className="ml-3 text-xl font-bold text-gray-900">
-                Smart Student Hub
-              </span>
+              {location.pathname === '/' ? (
+                <>
+                  <img src="/logo.png" alt="logo" className="h-10 w-10 rounded-lg object-cover" onError={(e)=>{e.target.style.display='none'}} />
+                  <span className="ml-3 text-xl font-bold text-gray-900">Smart Student Hub</span>
+                </>
+              ) : (
+                <span className="ml-3 text-xl font-bold text-gray-900">Smart Student Hub</span>
+              )}
             </Link>
 
             {/* Navigation Items */}
@@ -103,7 +105,7 @@ const Navbar = () => {
           </div>
 
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
             {/* Notifications */}
             <button className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors">
               <Bell className="h-5 w-5" />
@@ -127,6 +129,9 @@ const Navbar = () => {
               </div>
             </div>
 
+            <div className="hidden sm:block">
+              <DarkModeToggle />
+            </div>
             {/* Logout Button */}
             <button
               onClick={handleLogout}

@@ -13,6 +13,7 @@ import AddActivity from './components/activities/AddActivity';
 import Portfolio from './components/portfolio/Portfolio';
 import ApprovalPanel from './components/approval/ApprovalPanel';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import Home from './pages/Home';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -127,10 +128,14 @@ function App() {
               } 
             />
             
-            {/* Default Route */}
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+            {/* Home Route */}
+            <Route path="/" element={<Home />} />
           </Routes>
         </div>
+        {/* Global footer credit */}
+        <footer className="w-full text-center mt-6 text-sm text-gray-500 py-4 border-t border-gray-100">
+          Built by the FightTheByte team
+        </footer>
       </Router>
     </AuthProvider>
   );
