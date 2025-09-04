@@ -4,11 +4,11 @@ import DarkModeToggle from '../components/common/DarkModeToggle';
 
 const TEAM = [
   { name: 'Garvit Ranka', role: 'Team Leader', img: '', bio: 'Aspiring Computer Scientist & Cybersecurity Enthusiast passionate about cloud, networks, and digital security.', linkedin: 'https://www.linkedin.com/in/garvit835', github: 'https://www.github.com/garvit835' },
-  { name: 'Mahesh Kumawat', role: 'Team Member', img: '', bio: 'B.Tech 4th semester student with skills in web development, Java, Python, and cloud fundamentals, passionate about learning new technologies and problem-solving.', linkedin: 'https://www.linkedin.com/in/mahesh-kumawat-2287922b0/', github: 'https://github.com/mahesh7805' },
-  { name: 'Samiksha Singh', role: 'Team Member', img: '', bio: 'Core contributor.', linkedin: '#', github: 'https://github.com/SamikshaSingh241' },
+  { name: 'Mahesh Kumawat', role: 'Team Member', img: '', bio: 'B.Tech 5th semester student with skills in web development, Java, Python, and cloud fundamentals, passionate about learning new technologies and problem-solving.', linkedin: 'https://www.linkedin.com/in/mahesh-kumawat-2287922b0/', github: 'https://github.com/mahesh7805' },
+  { name: 'Samiksha Singh', role: 'Team Member', img: '', bio: 'Hi, I’m Samiksha Singh — a tech enthusiast who loves solving problems and exploring new technologies. Skilled in DSA with Java, I also have experience with Microsoft AI and Azure services and hold the PL-900 certification. I enjoy applying my skills to create efficient solutions while continuously learning and growing in the tech space.', linkedin: 'https://www.linkedin.com/in/samiksha-singh-160838316', github: 'https://github.com/SamikshaSingh241' },
   { name: 'Vivek Vyas', role: 'Team Member', img: '', bio: 'Passionate Computer Science Student with a keen interest in WebDevelopment,Blockchain And Problem Solving', linkedin: 'https://www.linkedin.com/in/vivek-vyas-8777752b0/', github: 'https://github.com/vivek1735' },
-  { name: 'Krutik Chamta', role: 'Team Member', img: '', bio: 'Core contributor.', linkedin: '#', github: 'https://github.com/Krutik0806' },
-  { name: 'Anvesha Sinha', role: 'Team Member', img: '', bio: 'Hi, I’m Anvesha Sinha, currently pursuing B.Tech CSE (Microsoft) at Parul University , and I’m interested in Java, C language, Python, and coding.', linkedin: '#', github: 'https://github.com/anvesha01901-prog' }
+  { name: 'Krutik Chamta', role: 'Team Member', img: '', bio: 'Core contributor.', linkedin: 'https://www.linkedin.com/in/krutik-chamtha-667201280/', github: 'https://github.com/Krutik0806' },
+  { name: 'Anvesha Sinha', role: 'Team Member', img: '', bio: 'Hi, I’m Anvesha Sinha, currently pursuing B.Tech CSE (Microsoft) at Parul University , and I’m interested in Java, C language, Python, and coding.', linkedin: 'https://www.linkedin.com/in/anvesha-sinha-613590213/', github: 'https://github.com/anvesha01901-prog' }
 ];
 
 export default function Home() {
